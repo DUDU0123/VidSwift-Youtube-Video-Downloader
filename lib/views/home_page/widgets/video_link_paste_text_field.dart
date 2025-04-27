@@ -1,11 +1,21 @@
 import 'package:youtube_video_downloader/controllers/home_page_controller.dart';
 import 'package:youtube_video_downloader/utils/constants/app_global_imports.dart';
 
-class VideoLinkPasteTextField extends StatelessWidget {
+class VideoLinkPasteTextField extends StatefulWidget {
   const VideoLinkPasteTextField({
     super.key,
   });
 
+  @override
+  State<VideoLinkPasteTextField> createState() => _VideoLinkPasteTextFieldState();
+}
+
+class _VideoLinkPasteTextFieldState extends State<VideoLinkPasteTextField> {
+  @override
+  void dispose() {
+    Get.find<HomePageController>().ytVideolinkController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -20,7 +30,7 @@ class VideoLinkPasteTextField extends StatelessWidget {
         hintText: "Paste Youtube Video Link",
         hintStyle: TextStyle(
           color: AppColors.kGrey,
-          fontSize: 16.sp,
+          fontSize: 15.sp,
           fontFamily: AppFonts.carterOne,
         ),
         focusedBorder: OutlineInputBorder(

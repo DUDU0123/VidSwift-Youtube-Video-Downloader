@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.youtube_video_downloader"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

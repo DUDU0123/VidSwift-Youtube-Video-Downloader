@@ -8,14 +8,27 @@ class MenuButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
+      color: AppColors.kBlackDarkShade,
+      iconColor: AppColors.kWhite,
       itemBuilder: (context) {
         return [
-          const PopupMenuItem(
-            child: Text("Share"),
+          PopupMenuItem(
+            child: menuItemTextWidget(
+              menuName: "Delete",
+            ),
           ),
-          const PopupMenuItem(child: Text("Delete")),
         ];
       },
+    );
+  }
+
+  Widget menuItemTextWidget({required String menuName}) {
+    return Text(
+      menuName,
+      style: TextStyle(
+        fontFamily: AppFonts.poppins,
+        color: AppColors.kWhite,
+      ),
     );
   }
 }

@@ -7,7 +7,8 @@ class VideoModel extends Equatable {
   final String? videoUrl;
   final String? videoThumbnailUrl;
   final Duration? videoDuration;
-  final List? videoResolutions;
+  final List<String>? availableVideoQualities;
+  final Map<String, String>? videoQualityListWithUrl;
   const VideoModel({
     this.videoId,
     this.videoTitle,
@@ -15,8 +16,31 @@ class VideoModel extends Equatable {
     this.videoUrl,
     this.videoThumbnailUrl,
     this.videoDuration,
-    this.videoResolutions,
+    this.availableVideoQualities,
+    this.videoQualityListWithUrl,
   });
+
+  VideoModel copyWith({
+    String? videoId,
+    String? videoTitle,
+    String? videoDescription,
+    String? videoUrl,
+    String? videoThumbnailUrl,
+    Duration? videoDuration,
+    List<String>? availableVideoQualities,
+    Map<String, String>? videoQualityListWithUrl,
+  }) {
+    return VideoModel(
+      videoId: videoId ?? this.videoId,
+      videoTitle: videoTitle ?? this.videoTitle,
+      videoDescription: videoDescription ?? this.videoDescription,
+      videoUrl: videoUrl ?? this.videoUrl,
+      videoThumbnailUrl: videoThumbnailUrl ?? this.videoThumbnailUrl,
+      videoDuration: videoDuration ?? this.videoDuration,
+      videoQualityListWithUrl: videoQualityListWithUrl ?? this.videoQualityListWithUrl,
+      availableVideoQualities: availableVideoQualities ?? this.availableVideoQualities,
+    );
+  }
 
   @override
   List<Object?> get props {
@@ -27,7 +51,8 @@ class VideoModel extends Equatable {
       videoUrl,
       videoThumbnailUrl,
       videoDuration,
-      videoResolutions,
+      availableVideoQualities,
+      videoQualityListWithUrl,
     ];
   }
 }

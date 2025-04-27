@@ -1,3 +1,4 @@
+import 'package:youtube_video_downloader/controllers/home_page_controller.dart';
 import 'package:youtube_video_downloader/utils/constants/app_global_imports.dart';
 
 Future<dynamic> downloadOptionsShowBottomSheet(BuildContext context) {
@@ -5,31 +6,41 @@ Future<dynamic> downloadOptionsShowBottomSheet(BuildContext context) {
       backgroundColor: AppColors.kTransparent,
       context: context,
       builder: (context) {
-        return Container(
-          height: 300.h,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: AppColors.kBlackDarkShade,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.r),
-              topRight: Radius.circular(20.r),
-            ),
-          ),
-          child: Column(
-            children: [
-              AppConstraints.kHeight20,
-              Text(
-                "Download Options",
-                style: TextStyle(
-                  color: AppColors.kWhite,
-                  fontSize: 18.sp,
-                  fontFamily: AppFonts.carterOne,
+        return GetBuilder<HomePageController>(
+          builder: (homePageController) {
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              height: 300.h,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: AppColors.kBlackDarkShade,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.r),
+                  topRight: Radius.circular(20.r),
                 ),
               ),
-              AppConstraints.kHeight20,
-              // Add your download options here
-            ],
-          ),
+              child: Column(
+                children: [
+                  AppConstraints.kHeight20,
+                  Text(
+                    "Download Options",
+                    style: textStyle(
+                      fontFamily: AppFonts.carterOne,
+                      fontSize: 18.sp,
+                    ),
+                  ),
+                  AppConstraints.kHeight20,
+                  Text(
+                    homePageController.videoModel?.videoTitle ?? "No title found",
+                    style: textStyle(
+                      fontFamily: AppFonts.poppins,
+                      fontSize: 18.sp,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
         );
       },
     );

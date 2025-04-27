@@ -1,6 +1,7 @@
 import 'package:youtube_video_downloader/utils/app_routes/app_routes.dart';
 import 'package:youtube_video_downloader/utils/app_routes/routes_name.dart';
 import 'package:youtube_video_downloader/utils/constants/app_global_imports.dart';
+import 'package:youtube_video_downloader/views/video_play_page/pages/video_play_page.dart';
 
 class RootWidgetPage extends StatelessWidget {
   const RootWidgetPage({super.key});
@@ -17,6 +18,7 @@ class RootWidgetPage extends StatelessWidget {
             ),
             scaffoldBackgroundColor: AppColors.kBlack
           ),
+          // home: VideoPlayPage(),
           initialRoute: RoutesName.splash,
           routes: AppRoutes.routes,
         ),
