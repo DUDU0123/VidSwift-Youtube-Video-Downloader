@@ -16,7 +16,7 @@ class AppLogoWidget extends StatelessWidget {
       width: width.w,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.r)),
       child: Image.asset(
-        "assets/vid_swift_logo.png",
+        "assets/images/vid_swift_logo.png",
         fit: BoxFit.cover,
       ),
     );

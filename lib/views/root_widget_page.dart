@@ -12,6 +12,9 @@ class RootWidgetPage extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           navigatorKey: AppGlobalKeys.navigatorKey,
           theme: ThemeData(
+            appBarTheme: AppBarTheme(
+              backgroundColor: AppColors.kBlack,
+            ),
             scaffoldBackgroundColor: AppColors.kBlack
           ),
           initialRoute: RoutesName.splash,
