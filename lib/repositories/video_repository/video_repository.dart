@@ -183,4 +183,21 @@ class VideoRepository {
       return [];
     }
   }
+
+  Future<String> deleteVideo({required String filePath}) async {
+    final file = File(filePath);
+    try {
+      if (await file.exists()) {
+      file.delete();
+      debugPrint("Video deleted successfully");
+      return "Video deleted successfully";
+      }else{
+        debugPrint("Unable to delet video");
+        return "Unable to delete video";
+      }
+    } catch (e) {
+      debugPrint("Unable to delet video ${e.toString()}");
+      return "Oops! Unable to delet video";
+    }
+  }
 }
