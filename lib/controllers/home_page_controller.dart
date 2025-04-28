@@ -9,13 +9,18 @@ class HomePageController extends GetxController{
   TextEditingController ytVideolinkController = TextEditingController();
   VideoRepository videoRepository = VideoRepository();
   VideoModel? videoModel;
-  String errorMessage = '';
+  String selectedQuality = '360p';
   bool isLoading = false;
-  String videoDownloadProgress = '0';
+  String videoDownloadProgress = '1080';
   void pasteLink(){
     Clipboard.getData(Clipboard.kTextPlain).then((value) {
       ytVideolinkController.text = value?.text ?? "";
    });
+  }
+
+  void updateSelectedQuality({required String selectedValue}){
+    selectedQuality = selectedValue;
+    update();
   }
 
   void clearField(){

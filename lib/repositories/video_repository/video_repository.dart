@@ -105,18 +105,16 @@ Future<void> downloadVideo(String videoUrl) async {
       final manifest = await youtubeExplode.videos.streamsClient.getManifest(video.id);
 
     List<Map<String, String>> qualities = [];
-
-    for (var stream in manifest.muxed) {
+    for (var stream in manifest.videoOnly) {
+      log("Quality: ${stream.videoQuality} ${stream.qualityLabel}");
       qualities.add({
         'quality': stream.qualityLabel ?? '',
         'url': stream.url.toString(),
       });
     }
 
-    Map<String, String> videoQualityListWithUrl = {};
-    for (var element in qualities) {
-     videoQualityListWithUrl.addAll(element);
-    }
+    log("Qualituies: ${qualities}");
+
 
     VideoModel fetchedVideoModel = VideoModel(
         videoId: video.id.value,
@@ -125,12 +123,12 @@ Future<void> downloadVideo(String videoUrl) async {
         videoThumbnailUrl: video.thumbnails.maxResUrl,
         videoDescription: video.description,
         videoDuration: video.duration,
-        videoQualityListWithUrl: videoQualityListWithUrl,
+        videoQualityListWithUrl: qualities,
     );
 
     return fetchedVideoModel;
     } catch (e) {
-      log("Error on fetching video");
+      log("Error on fetching video ${e.toString()}");
       throw Exception(e.toString());
     }
   }

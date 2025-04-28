@@ -8,7 +8,7 @@ class VideoModel extends Equatable {
   final String? videoThumbnailUrl;
   final Duration? videoDuration;
   final List<String>? availableVideoQualities;
-  final Map<String, String>? videoQualityListWithUrl;
+  final List<Map<String, String>>? videoQualityListWithUrl;
   const VideoModel({
     this.videoId,
     this.videoTitle,
@@ -28,7 +28,7 @@ class VideoModel extends Equatable {
     String? videoThumbnailUrl,
     Duration? videoDuration,
     List<String>? availableVideoQualities,
-    Map<String, String>? videoQualityListWithUrl,
+    List<Map<String, String>>? videoQualityListWithUrl,
   }) {
     return VideoModel(
       videoId: videoId ?? this.videoId,

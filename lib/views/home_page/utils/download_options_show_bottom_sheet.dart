@@ -20,33 +20,42 @@ Future<dynamic> downloadOptionsShowBottomSheet(BuildContext context) {
                   topRight: Radius.circular(20.r),
                 ),
               ),
-              child: Column(
-                children: [
-                  AppConstraints.kHeight20,
-                  Text(
-                    "Download Options",
-                    style: textStyle(
-                      fontFamily: AppFonts.carterOne,
-                      fontSize: 18.sp,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    AppConstraints.kHeight20,
+                    Text(
+                      "Download Options",
+                      style: textStyle(
+                        fontFamily: AppFonts.carterOne,
+                        fontSize: 18.sp,
+                      ),
                     ),
-                  ),
-                  AppConstraints.kHeight20,
-                  Text(
-                    homePageController.videoModel?.videoTitle ?? "No title found",
-                    style: textStyle(
-                      fontFamily: AppFonts.poppins,
-                      fontSize: 18.sp,
+                    AppConstraints.kHeight20,
+                    Text(
+                      homePageController.videoModel?.videoTitle ?? "No title found",
+                      style: textStyle(
+                        fontFamily: AppFonts.poppins,
+                        fontSize: 18.sp,
+                      ),
                     ),
-                  ),
-                  Text(
-                    "Select video quality",
-                    style: textStyle(
-                      fontFamily: AppFonts.poppins,
-                      fontSize: 18.sp,
+                    Row(
+                      children: [
+                        Text(
+                          "Select video quality",
+                          style: textStyle(
+                            fontFamily: AppFonts.carterOne,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                        AppConstraints.kWidth15,
+                        const VideoResolutionQualitySelectionWidget(),
+                      ],
                     ),
-                  ),
-                  const VideoResolutionQualitySelectionWidget(),
-                ],
+                    
+                    
+                  ],
+                ),
               ),
             );
           }
