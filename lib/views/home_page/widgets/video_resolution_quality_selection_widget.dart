@@ -11,12 +11,19 @@ class VideoResolutionQualitySelectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomePageController>(builder: (homePageController) {
-      List<Map<String, String>> uniqueQualities = [];
+      
       homePageController.videoModel?.videoQualityListWithUrl
           ?.forEach((videoQuality) {
-        if (!uniqueQualities
+        if (!homePageController.uniqueVideoQualities
             .any((item) => item["quality"] == videoQuality["quality"])) {
-          uniqueQualities.add(videoQuality);
+          homePageController.uniqueVideoQualities.add(videoQuality);
+        }
+      });
+      homePageController.videoModel?.audioQualityListWithUrl
+          ?.forEach((audioQuality) {
+        if (!homePageController.uniqueVideoQualities
+            .any((item) => item["quality"] == audioQuality["quality"])) {
+          homePageController.uniqueVideoQualities.add(audioQuality);
         }
       });
       return IntrinsicWidth(
@@ -29,12 +36,16 @@ class VideoResolutionQualitySelectionWidget extends StatelessWidget {
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
-              icon: Icon(Icons.arrow_drop_down_rounded, color: AppColors.kBlack,size: 30.sp,),
+              icon: Icon(
+                Icons.arrow_drop_down_rounded,
+                color: AppColors.kBlack,
+                size: 30.sp,
+              ),
               value: homePageController.selectedQuality.isNotEmpty
-                    ? homePageController.selectedQuality
-                    : null,
+                  ? homePageController.selectedQuality
+                  : null,
               isExpanded: true,
-              items: uniqueQualities.map(
+              items: homePageController.uniqueVideoQualities.map(
                 (videoQuality) {
                   return DropdownMenuItem<String>(
                     value: videoQuality["quality"],
@@ -51,7 +62,8 @@ class VideoResolutionQualitySelectionWidget extends StatelessWidget {
               ).toList(),
               onChanged: (newValue) {
                 homePageController.updateSelectedQuality(
-                    selectedValue: newValue!);
+                  selectedValue: newValue!,
+                );
               },
             ),
           ),

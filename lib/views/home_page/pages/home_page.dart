@@ -5,6 +5,7 @@ import 'package:youtube_video_downloader/components/common_button_container.dart
 import 'package:youtube_video_downloader/controllers/home_page_controller.dart';
 import 'package:youtube_video_downloader/utils/constants/app_global_imports.dart';
 import 'package:youtube_video_downloader/utils/functions/app_message_dialogs.dart';
+import 'package:youtube_video_downloader/utils/functions/lotties.dart';
 import 'package:youtube_video_downloader/views/home_page/widgets/video_link_paste_text_field.dart';
 
 class HomePage extends StatelessWidget {
@@ -51,13 +52,7 @@ class HomePage extends StatelessWidget {
                   AppConstraints.kWidth15,
                   GetBuilder<HomePageController>(builder: (homePageController) {
                     if (homePageController.isLoading) {
-                      return Lottie.network(
-                        errorBuilder: (context, error, stackTrace) {
-                          return const SizedBox.shrink();
-                        },
-                        fit: BoxFit.cover,
-                        "https://lottie.host/1210e27c-040d-47ae-b733-52dd5425cf19/pVzdbsz7QT.json",
-                      );
+                      return loadingLottie();
                     }
                     return CommonButtonContainer(
                       padding: EdgeInsets.symmetric(

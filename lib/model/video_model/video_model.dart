@@ -9,6 +9,7 @@ class VideoModel extends Equatable {
   final Duration? videoDuration;
   final List<String>? availableVideoQualities;
   final List<Map<String, String>>? videoQualityListWithUrl;
+  final List<Map<String, String>>? audioQualityListWithUrl;
   const VideoModel({
     this.videoId,
     this.videoTitle,
@@ -18,6 +19,7 @@ class VideoModel extends Equatable {
     this.videoDuration,
     this.availableVideoQualities,
     this.videoQualityListWithUrl,
+    this.audioQualityListWithUrl,
   });
 
   VideoModel copyWith({
@@ -29,6 +31,7 @@ class VideoModel extends Equatable {
     Duration? videoDuration,
     List<String>? availableVideoQualities,
     List<Map<String, String>>? videoQualityListWithUrl,
+    List<Map<String, String>>? audioQualityListWithUrl,
   }) {
     return VideoModel(
       videoId: videoId ?? this.videoId,
@@ -39,6 +42,7 @@ class VideoModel extends Equatable {
       videoDuration: videoDuration ?? this.videoDuration,
       videoQualityListWithUrl: videoQualityListWithUrl ?? this.videoQualityListWithUrl,
       availableVideoQualities: availableVideoQualities ?? this.availableVideoQualities,
+      audioQualityListWithUrl: audioQualityListWithUrl ?? this.audioQualityListWithUrl,
     );
   }
 
@@ -53,6 +57,7 @@ class VideoModel extends Equatable {
       videoDuration,
       availableVideoQualities,
       videoQualityListWithUrl,
+      audioQualityListWithUrl,
     ];
   }
 }
