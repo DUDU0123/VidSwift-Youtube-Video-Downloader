@@ -1,5 +1,6 @@
 import 'package:youtube_video_downloader/controllers/home_page_controller.dart';
 import 'package:youtube_video_downloader/utils/constants/app_global_imports.dart';
+import 'package:youtube_video_downloader/views/home_page/widgets/video_resolution_quality_selection_widget.dart';
 
 Future<dynamic> downloadOptionsShowBottomSheet(BuildContext context) {
     return showModalBottomSheet(
@@ -37,6 +38,14 @@ Future<dynamic> downloadOptionsShowBottomSheet(BuildContext context) {
                       fontSize: 18.sp,
                     ),
                   ),
+                  Text(
+                    "Select video quality",
+                    style: textStyle(
+                      fontFamily: AppFonts.poppins,
+                      fontSize: 18.sp,
+                    ),
+                  ),
+                  const VideoResolutionQualitySelectionWidget(),
                 ],
               ),
             );
@@ -45,3 +54,5 @@ Future<dynamic> downloadOptionsShowBottomSheet(BuildContext context) {
       },
     );
   }
+
+

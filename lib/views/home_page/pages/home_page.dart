@@ -14,6 +14,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: null,
           title: Text(
             "VidSwift",
             style: TextStyle(

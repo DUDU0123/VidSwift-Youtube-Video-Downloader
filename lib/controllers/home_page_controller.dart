@@ -19,8 +19,10 @@ class HomePageController extends GetxController{
   }
 
   void clearField(){
-    ytVideolinkController.text = '';
-    update();
+    if (ytVideolinkController.text.isNotEmpty) {
+      ytVideolinkController.text = '';
+      update();
+    }
   }
 
   setDownloadProgress({required String downloadProgress,}){
@@ -44,7 +46,7 @@ class HomePageController extends GetxController{
     if(ytVideolinkController.text.isEmpty || !isLinkValid){
       AppMessageDialogs.commonSnackbar(
         context: context,
-        message: "Please paste a valid Youtube video link",
+        message: "Please paste a valid link",
       );
     }else{
       try {
@@ -56,7 +58,11 @@ class HomePageController extends GetxController{
         update();
         log("Video Fetched: ${videoModel?.videoTitle}");
         // method for showing the download bottom sheet
-        downloadOptionsShowBottomSheet(context);
+        if (videoModel!=null) {
+          downloadOptionsShowBottomSheet(context);
+        } else {
+          AppMessageDialogs.commonSnackbar(context: context, message: "Unable to find the video");
+        }
       } catch (e) {
          errorMessage = "Oops! An unexpected error occured";
         isLoading = false;
