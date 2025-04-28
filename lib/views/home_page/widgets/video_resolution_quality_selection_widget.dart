@@ -21,9 +21,9 @@ class VideoResolutionQualitySelectionWidget extends StatelessWidget {
       });
       homePageController.videoModel?.audioQualityListWithUrl
           ?.forEach((audioQuality) {
-        if (!homePageController.uniqueVideoQualities
+        if (!homePageController.uniqueAudioQualities
             .any((item) => item["quality"] == audioQuality["quality"])) {
-          homePageController.uniqueVideoQualities.add(audioQuality);
+          homePageController.uniqueAudioQualities.add(audioQuality);
         }
       });
       return IntrinsicWidth(

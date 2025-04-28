@@ -108,7 +108,6 @@ class HomePageController extends GetxController {
 
   Future<void> downloadVideo() async {
     try {
-      log("Selected video url: ${selectedVideoUrl}");
       updateIsVideoDownloading(value: true);
       final message = await videoRepository.downloadVideo(
           videoUrl: selectedVideoUrl,
