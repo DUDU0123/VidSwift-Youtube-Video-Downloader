@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/services.dart';
+import 'package:youtube_video_downloader/controllers/video_page_controller.dart';
 import 'package:youtube_video_downloader/model/video_model/video_model.dart';
 import 'package:youtube_video_downloader/repositories/video_repository/video_repository.dart';
 import 'package:youtube_video_downloader/utils/constants/app_global_imports.dart';
@@ -116,6 +117,7 @@ class HomePageController extends GetxController {
               "${videoModel?.videoTitle}-${DateTime.now().millisecondsSinceEpoch}");
       if (message.isNotEmpty) {
         isVideoDownloadCompleted = true;
+        Get.find<VideoPageController>().getAllVideo();
         update();
         AppMessageDialogs.commonSnackbar(
           context: AppGlobalKeys.navigatorKey.currentContext!,

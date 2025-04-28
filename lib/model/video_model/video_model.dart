@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 
 class VideoModel extends Equatable {
@@ -5,7 +7,7 @@ class VideoModel extends Equatable {
   final String? videoTitle;
   final String? videoDescription;
   final String? videoUrl;
-  final String? videoThumbnailUrl;
+  final File? videoThumbnail;
   final Duration? videoDuration;
   final List<String>? availableVideoQualities;
   final List<Map<String, String>>? videoQualityListWithUrl;
@@ -15,7 +17,7 @@ class VideoModel extends Equatable {
     this.videoTitle,
     this.videoDescription,
     this.videoUrl,
-    this.videoThumbnailUrl,
+    this.videoThumbnail,
     this.videoDuration,
     this.availableVideoQualities,
     this.videoQualityListWithUrl,
@@ -27,7 +29,7 @@ class VideoModel extends Equatable {
     String? videoTitle,
     String? videoDescription,
     String? videoUrl,
-    String? videoThumbnailUrl,
+    File? videoThumbnail,
     Duration? videoDuration,
     List<String>? availableVideoQualities,
     List<Map<String, String>>? videoQualityListWithUrl,
@@ -38,7 +40,7 @@ class VideoModel extends Equatable {
       videoTitle: videoTitle ?? this.videoTitle,
       videoDescription: videoDescription ?? this.videoDescription,
       videoUrl: videoUrl ?? this.videoUrl,
-      videoThumbnailUrl: videoThumbnailUrl ?? this.videoThumbnailUrl,
+      videoThumbnail: videoThumbnail ?? this.videoThumbnail,
       videoDuration: videoDuration ?? this.videoDuration,
       videoQualityListWithUrl: videoQualityListWithUrl ?? this.videoQualityListWithUrl,
       availableVideoQualities: availableVideoQualities ?? this.availableVideoQualities,
@@ -53,7 +55,7 @@ class VideoModel extends Equatable {
       videoTitle,
       videoDescription,
       videoUrl,
-      videoThumbnailUrl,
+      videoThumbnail,
       videoDuration,
       availableVideoQualities,
       videoQualityListWithUrl,
