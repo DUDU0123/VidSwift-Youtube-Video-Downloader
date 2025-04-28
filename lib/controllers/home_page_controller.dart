@@ -35,7 +35,9 @@ class HomePageController extends GetxController{
     videoModel = await videoRepository.fetchYtVideoDetails(videoUrl);
     update();
   } catch (e) {
-    errorMessage = "Oops! An unexpected error occured";
+    if (AppGlobalKeys.navigatorKey.currentContext!=null) {
+      AppMessageDialogs.commonSnackbar(context: AppGlobalKeys.navigatorKey.currentContext!, message: "Oops! An unexpected error occured");
+    }
     isLoading = false;
     update();
   }
@@ -54,7 +56,6 @@ class HomePageController extends GetxController{
         update();
         await getYtVideoDetails(videoUrl: ytVideolinkController.text);
         isLoading = false;
-        errorMessage = '';
         update();
         log("Video Fetched: ${videoModel?.videoTitle}");
         // method for showing the download bottom sheet
@@ -64,7 +65,7 @@ class HomePageController extends GetxController{
           AppMessageDialogs.commonSnackbar(context: context, message: "Unable to find the video");
         }
       } catch (e) {
-         errorMessage = "Oops! An unexpected error occured";
+        AppMessageDialogs.commonSnackbar(context: context, message: "Oops! An unexpected error occured");
         isLoading = false;
         update();
       }
