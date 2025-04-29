@@ -19,11 +19,27 @@ class _VideosListViewState extends State<VideosListView> {
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<VideoPageController>(builder: (videosPageController) {
       if (videosPageController.isFetchingVideos) {
-        return Center(child: loadingLottie(),);
+        return Center(
+          child: loadingLottie(),
+        );
+      }
+      if (videosPageController.videos.isEmpty) {
+        return Center(
+          child: Text(
+            "No videos found",
+            style: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w500,
+              color: AppColors.kWhite,
+              fontFamily: AppFonts.carterOne,
+            ),
+          ),
+        );
       }
       return ListView.builder(
         physics: const BouncingScrollPhysics(),
@@ -41,11 +57,14 @@ class _VideosListViewState extends State<VideosListView> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.r),
-                    child: videosPageController.videos[index].videoThumbnail!=null? Image.file(
-                      videosPageController.videos[index].videoThumbnail!,
-                      height: 180.h,
-                      fit: BoxFit.cover,
-                    ):Image.asset("assets/images/vid_swift_logo.png"),
+                    child: videosPageController.videos[index].videoThumbnail !=
+                            null
+                        ? Image.file(
+                            videosPageController.videos[index].videoThumbnail!,
+                            height: 180.h,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset("assets/images/vid_swift_logo.png"),
                   ),
                 ),
                 AppConstraints.kHeight10,
