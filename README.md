@@ -1,16 +1,43 @@
 # youtube_video_downloader
 
-A new Flutter project.
+# 📥 VidSwift
 
-## Getting Started
+**VidSwift** is a Flutter application that allows users to download YouTube videos directly onto their devices. With an easy-to-use interface and seamless functionality, users can select their desired video quality, manage downloads, and play videos all within the app.
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## 🚀 Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- 🔗 **Paste YouTube Link**  
+  Users can paste a YouTube video URL into a text field.
+  
+- 📊 **Choose Video Quality**  
+  A bottom sheet appears with available quality options after the link is pasted and the download button is clicked.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- ⬇️ **Download Video**  
+  Once a quality is selected, the app begins downloading the video.
+
+- 🎞 **View & Play Downloads**  
+  All downloaded videos are available in the **Videos** tab with built-in playback functionality.
+
+---
+
+## 🛠 Technologies Used
+
+- **State Management:** [`GetX`](https://pub.dev/packages/get)
+- **Video Playback:** [`better_player`](https://pub.dev/packages/better_player_plus)
+- **YouTube Video Extraction:** [`youtube_explode_dart`](https://pub.dev/packages/youtube_explode_dart)
+- **Audio/Video Merging:** [`ffmpeg_kit_flutter`](https://pub.dev/packages/ffmpeg_kit_flutter)  
+- **Video Thumbnails:** [`get_thumbnail_video`](https://pub.dev/packages/get_thumbnail_video)  
+
+All required permissions (storage, network, etc.) are handled appropriately to ensure smooth operation.
+
+---
+
+## 📦 Getting Started
+
+1. **Clone the Repository:**
+
+   ```bash
+   git clone https://github.com/DUDU0123/VidSwift-Youtube-Video-Downloader
+   cd VidSwift-Youtube-Video-Downloader

@@ -23,7 +23,10 @@ class VideoRepository {
   }) async {
     try {
       // Requesting storage permission
-      await Permission.storage.request();
+      final isPermissionGranted = await Permission.storage.request();
+      if(!isPermissionGranted.isGranted){
+        return "Permission denied for storage access";
+      }
 
       // Getting appropriate storage directory
       Directory directory;
