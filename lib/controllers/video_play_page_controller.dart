@@ -1,44 +1,48 @@
-import 'package:video_player/video_player.dart';
-import 'package:youtube_video_downloader/repositories/video_repository/video_repository.dart';
+import 'package:better_player_plus/better_player_plus.dart';
 import 'package:youtube_video_downloader/utils/constants/app_global_imports.dart';
 
+import 'package:get/get.dart';
+import 'dart:async';
+
 class VideoPlayPageController extends GetxController {
-  late VideoPlayerController controller;
-  VideoRepository videoRepository = VideoRepository();
+  late BetterPlayerController betterPlayerController;
+  Duration currentPosition = Duration.zero;
+  Duration totalDuration = Duration.zero;
   bool isPlaying = false;
 
-  void playPauseVideo() {
-    if (controller.value.isPlaying) {
-      isPlaying = false;
-      controller.pause();
-    } else {
-      isPlaying = true;
-      controller.play();
-    }
-    update();
+  void setupListeners() {
+    Timer.periodic(const Duration(milliseconds: 500), (timer) {
+      final controller = betterPlayerController.videoPlayerController;
+      if (controller != null && controller.value.initialized) {
+        currentPosition = controller.value.position;
+        totalDuration = controller.value.duration ?? Duration.zero;
+        isPlaying = controller.value.isPlaying;
+        update();
+      }
+    });
   }
 
-  Future<void> deleteVideo({required String filePath}) async {
-    try {
-      String value = await videoRepository.deleteVideo(filePath: filePath);
-      if (value.isNotEmpty) {
-        debugPrint("Video deleted error: $value");
-        AppMessageDialogs.commonSnackbar(
-          context: AppGlobalKeys.navigatorKey.currentContext!,
-          message: value,
-        );
+  void playPauseVideo() {
+    final player = betterPlayerController.videoPlayerController;
+    if (player != null) {
+      if (player.value.isPlaying) {
+        betterPlayerController.pause();
       } else {
-        AppMessageDialogs.commonSnackbar(
-          context: AppGlobalKeys.navigatorKey.currentContext!,
-          message: "Unable to delete video",
-        );
+        betterPlayerController.play();
       }
-    } catch (e) {
-      debugPrint("Video delete error: ${e.toString()}");
-      AppMessageDialogs.commonSnackbar(
-        context: AppGlobalKeys.navigatorKey.currentContext!,
-        message: "Unable to delete video",
-      );
+      isPlaying = !player.value.isPlaying;
+      update();
     }
+  }
+
+  void seekTo(Duration position) {
+    betterPlayerController.seekTo(position);
+  }
+
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$minutes:$seconds";
   }
 }

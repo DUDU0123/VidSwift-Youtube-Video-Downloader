@@ -30,6 +30,24 @@ class HomePageController extends GetxController {
     update();
   }
 
+  void setVideoAudioQualities(){
+    videoModel?.videoQualityListWithUrl
+          ?.forEach((videoQuality) {
+        if (!uniqueVideoQualities
+            .any((item) => item["quality"] == videoQuality["quality"])) {
+          uniqueVideoQualities.add(videoQuality);
+        }
+      });
+      videoModel?.audioQualityListWithUrl
+          ?.forEach((audioQuality) {
+        if (!uniqueAudioQualities
+            .any((item) => item["quality"] == audioQuality["quality"])) {
+          uniqueAudioQualities.add(audioQuality);
+        }
+      });
+      update();
+  }
+
   void updateSelectedQuality({
     required String selectedValue,
   }) {
@@ -45,7 +63,7 @@ class HomePageController extends GetxController {
       }
     }
 
-    log("Selected URL: ${selectedVideoUrl}");
+    log("Selected URL: ${selectedVideoUrl} and ${selectedAudioUrl}");
     update();
   }
 
@@ -92,8 +110,9 @@ class HomePageController extends GetxController {
         log("Video Fetched: ${videoModel?.videoTitle}");
         // method for showing the download bottom sheet
         if (videoModel != null) {
-          downloadOptionsShowBottomSheet(
-              context: context, isDownloading: isVideoDownloading);
+          // downloadOptionsShowBottomSheet(
+          //     context: context);
+          showDownloadOptionsDialog(context);
         } else {
           AppMessageDialogs.commonSnackbar(
               context: context, message: "Unable to find the video");
@@ -110,6 +129,11 @@ class HomePageController extends GetxController {
   Future<void> downloadVideo() async {
     try {
       updateIsVideoDownloading(value: true);
+      if (selectedAudioUrl.isEmpty || selectedVideoUrl.isEmpty) {
+        log("Selected Quality from download: ${selectedQuality}");
+        setVideoAudioQualities();
+        updateSelectedQuality(selectedValue: selectedQuality);
+      }
       final message = await videoRepository.downloadVideo(
           videoUrl: selectedVideoUrl,
           audioUrl: selectedAudioUrl,

@@ -14,15 +14,20 @@ class VideoLinkPasteTextField extends StatefulWidget {
 class _VideoLinkPasteTextFieldState extends State<VideoLinkPasteTextField> {
   @override
   void dispose() {
-    // Get.find<HomePageController>().ytVideolinkController.dispose();
     super.dispose();
   }
+
+  final border = OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.r),
+              borderSide: BorderSide(color: AppColors.kGrey),
+            );
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomePageController>(
       builder: (homePageController) {
         return TextField(
+          enabled: !homePageController.isLoading,
           controller: homePageController.ytVideolinkController,
           style: TextStyle(
             color: AppColors.kWhite,
@@ -30,13 +35,16 @@ class _VideoLinkPasteTextFieldState extends State<VideoLinkPasteTextField> {
             fontFamily: AppFonts.poppins,
           ),
           decoration: InputDecoration(
-            suffixIcon: GestureDetector(
-              onTap: () {
-                homePageController.clearField();
-              },
-              child: Icon(
-                Icons.close_rounded,
-                color: AppColors.kGrey,
+            suffixIcon: IgnorePointer(
+              ignoring: homePageController.isLoading,
+              child: GestureDetector(
+                onTap: () {
+                  homePageController.clearField();
+                },
+                child: Icon(
+                  Icons.close_rounded,
+                  color: AppColors.kGrey,
+                ),
               ),
             ),
             hintText: "Paste Youtube Video Link",
@@ -45,14 +53,10 @@ class _VideoLinkPasteTextFieldState extends State<VideoLinkPasteTextField> {
               fontSize: 15.sp,
               fontFamily: AppFonts.carterOne,
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.r),
-              borderSide: BorderSide(color: AppColors.kAppLightGreen),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.r),
-              borderSide: BorderSide(color: AppColors.kGrey),
-            ),
+            enabledBorder: border,
+            focusedBorder: border,
+            border: border,
+            disabledBorder: border
           ),
         );
       }

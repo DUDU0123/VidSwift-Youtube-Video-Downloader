@@ -4,6 +4,7 @@ import 'package:youtube_video_downloader/components/common_button_container.dart
 import 'package:youtube_video_downloader/controllers/video_page_controller.dart';
 import 'package:youtube_video_downloader/utils/constants/app_global_imports.dart';
 import 'package:youtube_video_downloader/utils/functions/lotties.dart';
+import 'package:youtube_video_downloader/views/video_play_page/pages/video_play_page.dart';
 
 class VideosListView extends StatefulWidget {
   const VideosListView({
@@ -91,9 +92,9 @@ class _VideosListViewState extends State<VideosListView> {
                     color: AppColors.kBlack,
                   ),
                   onTap: () {
-                    AppGlobalKeys.navigatorKey.currentState?.pushNamed(
-                        RoutesName.videoPlayPage,
-                        arguments: videosPageController.videos[index]);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return VideoPlayPage(video: videosPageController.videos[index]);
+                    },));
                   },
                 ),
               ],

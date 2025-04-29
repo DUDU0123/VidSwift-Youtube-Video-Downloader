@@ -63,7 +63,9 @@ class VideoRepository {
           .writeAsBytes(Uint8List.fromList(audioDownloadResponse.data!));
       }
 
-      if (await videoFile.exists() &&await audioFile.exists()) {
+      if (!await audioFile.exists()) {
+        return "Unable to download audio for this video";
+      }
         // Building FFmpeg command
       final String ffmpegCommand =
           '-i "$videoFilePath" -i "$audioFilePath" -map 0:v -map 1:a -c:v copy -c:a aac "$outputFilePath"';
@@ -96,12 +98,6 @@ class VideoRepository {
       } else {
         debugPrint("Error merging streams: ${returnCode.getValue()}");
         return "Unable to download video";
-      }
-      }else{
-        if (await videoFile.exists()) {
-            await videoFile.delete();
-          }
-          return "Video downloaded successfully";
       }
     } catch (e) {
       debugPrint('Error downloading video: $e');
@@ -198,23 +194,6 @@ class VideoRepository {
     } catch (e) {
       debugPrint('Error listing video models with thumbnails: $e');
       return [];
-    }
-  }
-
-  Future<String> deleteVideo({required String filePath}) async {
-    final file = File(filePath);
-    try {
-      if (await file.exists()) {
-      file.delete();
-      debugPrint("Video deleted successfully");
-      return "Video deleted successfully";
-      }else{
-        debugPrint("Unable to delet video");
-        return "Unable to delete video";
-      }
-    } catch (e) {
-      debugPrint("Unable to delet video ${e.toString()}");
-      return "Oops! Unable to delet video";
     }
   }
 }
