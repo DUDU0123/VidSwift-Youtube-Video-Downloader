@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as d;
 import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
 import 'package:get_thumbnail_video/index.dart';
 import 'package:get_thumbnail_video/video_thumbnail.dart';
@@ -15,7 +15,7 @@ import 'package:path/path.dart' as p;
 
 class VideoRepository {
   final YoutubeExplode youtubeExplode = YoutubeExplode();
-  final Dio dio = Dio();
+  final d.Dio dio = d.Dio();
   Future<String> downloadVideo({
     required String videoUrl,
     required String audioUrl,
@@ -42,22 +42,29 @@ class VideoRepository {
       // Downloading video
       final videoDownloadResponse = await dio.get<List<int>>(
         videoUrl,
-        options: Options(responseType: ResponseType.bytes),
+        options: d.Options(responseType: d.ResponseType.bytes),
       );
       final videoFile = File(videoFilePath);
       await videoFile
           .writeAsBytes(Uint8List.fromList(videoDownloadResponse.data!));
-
+      d.Response<List<int>>? audioDownloadResponse;
       // Downloading audio
-      final audioDownloadResponse = await dio.get<List<int>>(
+      try {
+        audioDownloadResponse = await dio.get<List<int>>(
         audioUrl,
-        options: Options(responseType: ResponseType.bytes),
+        options: d.Options(responseType: d.ResponseType.bytes),
       );
+      } catch (e) {
+        debugPrint("No audio file for this video");
+      }
       final audioFile = File(audioFilePath);
-      await audioFile
+      if (audioDownloadResponse!=null && audioDownloadResponse.data!=null) {
+        await audioFile
           .writeAsBytes(Uint8List.fromList(audioDownloadResponse.data!));
+      }
 
-      // Building FFmpeg command
+      if (await videoFile.exists() &&await audioFile.exists()) {
+        // Building FFmpeg command
       final String ffmpegCommand =
           '-i "$videoFilePath" -i "$audioFilePath" -map 0:v -map 1:a -c:v copy -c:a aac "$outputFilePath"';
 
@@ -74,8 +81,12 @@ class VideoRepository {
 
         // deleting video and audio file after storing video to device app storge
         try {
-          await videoFile.delete();
-          await audioFile.delete();
+          if (await videoFile.exists()) {
+            await videoFile.delete();
+          }
+          if (await audioFile.exists()) {
+            await audioFile.delete();
+          }
           debugPrint("Temporary files deleted.");
         } catch (e) {
           debugPrint("Failed to delete temp files: $e");
@@ -85,6 +96,12 @@ class VideoRepository {
       } else {
         debugPrint("Error merging streams: ${returnCode.getValue()}");
         return "Unable to download video";
+      }
+      }else{
+        if (await videoFile.exists()) {
+            await videoFile.delete();
+          }
+          return "Video downloaded successfully";
       }
     } catch (e) {
       debugPrint('Error downloading video: $e');
